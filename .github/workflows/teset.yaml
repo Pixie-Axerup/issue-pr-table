@@ -21,6 +21,7 @@ jobs:
     - name: search issues and PRs
       run: |
         echo "issue-issue-pr-table=$(gh issue list --json number | grep "number" | jq length)" >>  $GITHUB_ENV
+        sed -ie "s/{THIS}/$issue-issue-pr-table/g" README.md
         echo "pr-issue-pr-table=$(gh pr list --json number | grep "number" | jq length)" >>  $GITHUB_ENV
 
 
