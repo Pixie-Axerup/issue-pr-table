@@ -37,6 +37,8 @@ jobs:
     - name: Publish Documentation
       run: |
         git add .
+        git config --global user.email "pixie.axerup@ingka.ikea.com"
+        git config --global user.name "Pixie Axerup"
         git commit -m 'Documentation update' --allow-empty
         git push origin main
       working-directory: ./
