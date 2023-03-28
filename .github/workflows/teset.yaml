@@ -1,4 +1,4 @@
-name: Build Dashboard
+name: Build 'README.md'
 
 on:
   workflow_dispatch:
@@ -45,17 +45,15 @@ jobs:
                   url: 'https://github.com/Pixie-Axerup/issue-pr-table'
                 - value: 'This is my test repo'
                 - script: |
-                    const repo = 'Pixie-Axerup/issue-pr-table'
                     const results = await github.search.issuesAndPullRequests({
-                      q: `repo:${repo} is:issue is:open}`
+                      q: `repo:Pixie-Axerup/issue-pr-table is:issue is:open}`
                     })
                     const count = results.data.total_count
                     const title = 'Open issues'
                     return results.data.total_count
                 - script: |
-                    const repo = 'Pixie-Axerup/issue-pr-table'
                     const results = await github.search.issuesAndPullRequests({
-                      q: `repo:${repo} is:pr is:open}`
+                      q: `repo:Pixie-Axerup/issue-pr-table is:issue is:open}`
                     })
                     const count = results.data.total_count
                     const title = 'Open PRs'
@@ -67,6 +65,6 @@ jobs:
         git add .
         git config --global user.email "pixie.axerup@ingka.ikea.com"
         git config --global user.name "Pixie Axerup"
-        git commit -m 'Documentation update' --allow-empty
+        git commit -m 'docs: update readme from workflow' --allow-empty
         git push origin main
       working-directory: ./
