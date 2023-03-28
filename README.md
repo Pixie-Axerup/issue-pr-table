@@ -8,4 +8,4 @@ team members - [Pixie](https://github.com/Pixie-Axerup), [Timothy](https://githu
 
 | Project | Description | Open Issues | Open PRs |
 |---|---|---|---|
-| [Issue-pr-table](https://github.com/Pixie-Axerup/issue-pr-table) | This is my test repo | ${{ env.issue-issue-pr-table}} | ${{ env.pr-issue-pr-table}} |
+| [Issue-pr-table](https://github.com/Pixie-Axerup/issue-pr-table) | This is my test repo | issue-issue-pr-table | pr-issue-pr-table |
