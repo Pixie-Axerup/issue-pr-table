@@ -1,9 +1,11 @@
-# Dashboard
+# Welcom to Observability Pipeline team
 
-## Issues
+## About
 
-#### New Pull Requests (This Week)
+team members - [Pixie](https://github.com/Pixie-Axerup), [Timothy](https://github.com/timothy-mahoney)
 
-| Issue | Title |
-|---|---|
-| [1](https://github.com/Pixie-Axerup/issue-pr-table/issues/1) | [test 1](https://github.com/Pixie-Axerup/issue-pr-table/issues/1) |
+#### Our repositories
+
+| Project | Description | Open Issues | Open PRs |
+|---|---|---|---|
+| [Issue-pr-table](https://github.com/Pixie-Axerup/issue-pr-table) | This is my test repo | [object Object] | [object Object] |
