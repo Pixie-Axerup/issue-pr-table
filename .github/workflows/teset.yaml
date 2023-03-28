@@ -1,6 +1,8 @@
 name: Build Dashboard
 
 on:
+  push:
+  workflow_dispatch:
   schedule:
   - cron: 0 * * * *
 
