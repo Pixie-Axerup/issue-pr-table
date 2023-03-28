@@ -21,9 +21,9 @@ jobs:
     - name: search issues and PRs
       run: |
         echo "issue-issue-pr-table-new=$(gh issue list --json number | grep "number" | jq length)" >>  $GITHUB_ENV
-        sed -ie "s/$issue-issue-pr-table-new/$issue-issue-pr-table/g" README.md
+        sed -ie 's/issue-issue-pr-table-new/'$issue-issue-pr-table/g README.md
         echo "pr-issue-pr-table=$(gh pr list --json number | grep "number" | jq length)" >>  $GITHUB_ENV
-        sed -ie "s/$pr-issue-pr-table-new/$pr-issue-pr-table/g" README.md
+        sed -ie 's/$pr-issue-pr-table-new/'$pr-issue-pr-table/g README.md
 
 
     # - name: 'Generate Dashboard'
@@ -61,11 +61,11 @@ jobs:
     #                 return results.data.total_count
     #     token: ${{ github.token }}
 
-    # - name: Publish Documentation
-    #   run: |
-    #     git add .
-    #     git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-    #     git config --global user.name "github-actions[bot]"
-    #     git commit -m 'docs: update readme from workflow' --allow-empty
-    #     git push origin main
-    #   working-directory: ./
+    - name: Publish Documentation
+      run: |
+        git add .
+        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --global user.name "github-actions[bot]"
+        git commit -m 'docs: update readme from workflow' --allow-empty
+        git push 
+      working-directory: ./
