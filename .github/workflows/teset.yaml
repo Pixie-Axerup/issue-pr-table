@@ -16,51 +16,56 @@ jobs:
     steps:
     - name: Check out repository
       uses: actions/checkout@v2
-    - name: Check out GitHub Pages branch
-      uses: actions/checkout@v2
-      with:
-        path: './'
 
-    - name: 'Generate Dashboard'
-      uses: ethomson/issue-dashboard@v1
-      with:
-        config: |
-          title: 'Welcom to Observability Pipeline team'
-          output:
-            format: markdown
-            filename: 'README.md'
-          sections:
-          - title: 'About'
-            description: team members - [Pixie](https://github.com/Pixie-Axerup), [Timothy](https://github.com/timothy-mahoney)
-            widgets:
-            - type: 'table'
-              title: 'Our repositories'
-              headers:
-              - 'Project'
-              - 'Description'
-              - 'Open Issues'
-              - 'Open PRs'
-              elements:
-              - - value: 'Issue-pr-table'
-                  url: 'https://github.com/Pixie-Axerup/issue-pr-table'
-                - value: 'This is my test repo'
-                - issue_query: 'repo:Pixie-Axerup/issue-pr-table is:issue is:open'
-                  type: number
-                  color: 
-                - script: |
-                    const results = await github.search.issuesAndPullRequests({
-                      q: `repo:Pixie-Axerup/issue-pr-table is:issue is:open}`
-                    })
-                    const count = results.data.total_count
-                    const title = 'Open PRs'
-                    return results.data.total_count
-        token: ${{ github.token }}
 
-    - name: Publish Documentation
+    - name: search issues and PRs
       run: |
-        git add .
-        git config --global user.email "pixie.axerup@ingka.ikea.com"
-        git config --global user.name "Pixie Axerup"
-        git commit -m 'docs: update readme from workflow' --allow-empty
-        git push origin main
-      working-directory: ./
+        echo "issue-issue-pr-table-new=$(gh issue list --json number | grep "number" | jq length)" >>  $GITHUB_ENV
+        sed -ie "s/$issue-issue-pr-table-new/$issue-issue-pr-table/g" README.md
+        echo "pr-issue-pr-table=$(gh pr list --json number | grep "number" | jq length)" >>  $GITHUB_ENV
+        sed -ie "s/$pr-issue-pr-table-new/$pr-issue-pr-table/g" README.md
+
+
+    # - name: 'Generate Dashboard'
+    #   uses: ethomson/issue-dashboard@v1
+    #   with:
+    #     config: |
+    #       title: 'Welcom to Observability Pipeline team'
+    #       output:
+    #         format: markdown
+    #         filename: 'README.md'
+    #       sections:
+    #       - title: 'About'
+    #         description: team members - [Pixie](https://github.com/Pixie-Axerup), [Timothy](https://github.com/timothy-mahoney)
+    #         widgets:
+    #         - type: 'table'
+    #           title: 'Our repositories'
+    #           headers:
+    #           - 'Project'
+    #           - 'Description'
+    #           - 'Open Issues'
+    #           - 'Open PRs'
+    #           elements:
+    #           - - value: 'Issue-pr-table'
+    #               url: 'https://github.com/Pixie-Axerup/issue-pr-table'
+    #             - value: 'This is my test repo'
+    #             - issue_query: 'repo:Pixie-Axerup/issue-pr-table is:issue is:open'
+    #               type: number
+    #               color: 
+    #             - script: |
+    #                 const results = await github.search.issuesAndPullRequests({
+    #                   q: `repo:Pixie-Axerup/issue-pr-table is:issue is:open}`
+    #                 })
+    #                 const count = results.data.total_count
+    #                 const title = 'Open PRs'
+    #                 return results.data.total_count
+    #     token: ${{ github.token }}
+
+    # - name: Publish Documentation
+    #   run: |
+    #     git add .
+    #     git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+    #     git config --global user.name "github-actions[bot]"
+    #     git commit -m 'docs: update readme from workflow' --allow-empty
+    #     git push origin main
+    #   working-directory: ./
