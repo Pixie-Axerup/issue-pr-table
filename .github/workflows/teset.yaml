@@ -51,8 +51,7 @@ jobs:
                     })
                     const count = results.data.total_count
                     const title = 'Open issues'
-                    const color = (count > 10) ? 'red' : 'green'
-                    return { value: count, title: title, color: color }
+                    return results.data.total_count
                 - script: |
                     const repo = 'Pixie-Axerup/issue-pr-table'
                     const results = await github.search.issuesAndPullRequests({
@@ -60,8 +59,7 @@ jobs:
                     })
                     const count = results.data.total_count
                     const title = 'Open PRs'
-                    const color = (count > 5) ? 'red' : 'green'
-                    return { value: count, title: title, color: color }
+                    return results.data.total_count
         token: ${{ github.token }}
 
     - name: Publish Documentation
