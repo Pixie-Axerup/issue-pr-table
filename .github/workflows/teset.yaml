@@ -1,7 +1,6 @@
 name: Build Dashboard
 
 on:
-  push:
   workflow_dispatch:
   schedule:
   - cron: 0 * * * *
@@ -26,16 +25,43 @@ jobs:
       uses: ethomson/issue-dashboard@v1
       with:
         config: |
-          title: 'Dashboard'
+          title: 'Welcom to Observability Pipeline team'
           output:
             format: markdown
             filename: 'README.md'
           sections:
-          - title: 'Issues'
+          - title: 'About'
+            description: team members - [Pixie](https://github.com/Pixie-Axerup), [Timothy](https://github.com/timothy-mahoney)
             widgets:
             - type: 'table'
-              title: 'New Pull Requests (This Week)'
-              issue_query: 'repo:Pixie-Axerup/issue-pr-table is:open is:issue'
+              title: 'Our repositories'
+              headers:
+              - 'Project'
+              - 'Description'
+              - 'Open Issues'
+              - 'Open PRs'
+              elements:
+              - - value: 'Issue-pr-table'
+                  url: 'https://github.com/Pixie-Axerup/issue-pr-table'
+                - value: 'This is my test repo'
+                - script: |
+                    const repo = 'Pixie-Axerup/issue-pr-table'
+                    const results = await github.search.issuesAndPullRequests({
+                      q: `repo:${repo} is:issue is:open}`
+                    })
+                    const count = results.data.total_count
+                    const title = 'Open issues'
+                    const color = (count > 10) ? 'red' : 'green'
+                    return { value: count, title: title, color: color }
+                - script: |
+                    const repo = 'Pixie-Axerup/issue-pr-table'
+                    const results = await github.search.issuesAndPullRequests({
+                      q: `repo:${repo} is:pr is:open}`
+                    })
+                    const count = results.data.total_count
+                    const title = 'Open PRs'
+                    const color = (count > 5) ? 'red' : 'green'
+                    return { value: count, title: title, color: color }
         token: ${{ github.token }}
 
     - name: Publish Documentation
