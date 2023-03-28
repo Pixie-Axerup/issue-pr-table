@@ -16,8 +16,7 @@ jobs:
     - name: Check out GitHub Pages branch
       uses: actions/checkout@v2
       with:
-        ref: 'gh-pages'
-        path: 'out'
+        path: './'
 
     - name: 'Generate Dashboard'
       uses: ethomson/issue-dashboard@v1
@@ -25,8 +24,8 @@ jobs:
         config: |
           title: 'Dashboard'
           output:
-            format: html
-            filename: 'out/dashboard.html'
+            format: markdown
+            filename: 'README.md'
           sections:
           - title: 'Issues'
             widgets:
@@ -39,5 +38,5 @@ jobs:
       run: |
         git add .
         git commit -m 'Documentation update' --allow-empty
-        git push origin gh-pages
-      working-directory: out
+        git push origin main
+      working-directory: ./
