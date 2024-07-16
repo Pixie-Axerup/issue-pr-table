@@ -1,7 +1,8 @@
 name: Send traces to Context
 on:
+  workflow_dispatch:
   workflow_run:
-    workflows: ["CBuild 'README.md'"]
+    workflows: ["Build 'README.md'"]
     types:
       - completed
 
