@@ -1,0 +1,35 @@
+name: Send traces to Context
+on:
+  workflow_run:
+    workflows: ["Check links"]
+    types:
+      - completed
+
+jobs:
+  send-traces:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Retrieve secrets from Vault
+        uses: hashicorp/vault-action@v3.0.0
+        with:
+          url: https://vault-prod.build.ingka.ikea.com
+          method: jwt
+          namespace: opi-op
+          role: ${{ github.event.repository.name }}
+          exportToken: true
+          jwtGithubAudience: oi-o11y
+          secrets: |
+            secret/data/kontext token | CONTEXT_TOKEN
+
+      - name: Upload OTEL traces
+        uses: MNThomson/otel-action@master
+        env:
+          ENDPOINT: "otlp.context.ingka.com:443"
+          HEADERS: "Authorization: Basic ${{ env.CONTEXT_TOKEN }}"
+          SERVICE_NAME: "oi-o11y-examples-check-links"
+          WORKFLOW_RUN_ID: ${{ github.event.workflow_run.id }}
+        with:
+          ENDPOINT: ${{ env.ENDPOINT }}
+          HEADERS: ${{ env.HEADERS }}
+          SERVICE_NAME: ${{ env.SERVICE_NAME }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
