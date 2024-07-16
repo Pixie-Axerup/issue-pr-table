@@ -1,4 +1,7 @@
 name: Send traces to Context
+permissions:
+  id-token: write
+  contents: read
 on:
   workflow_dispatch:
   workflow_run:
